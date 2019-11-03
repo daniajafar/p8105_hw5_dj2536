@@ -1,0 +1,25 @@
+---
+title: "Homework 5"
+author: "Dania Jafar"
+date: "11/2/2019"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+
+set.seed(10)
+
+iris_with_missing = iris %>% 
+  map_df(~replace(.x, sample(1:150, 20), NA)) %>%
+  mutate(Species = as.character(Species))
+```
+
+```{r Problem 1}
+sepal_length_avg<-mean(iris_with_missing$Sepal.Length, na.rm = TRUE)
+iris_with_missing<-iris_with_missing %>%
+mutate(Sepal.Length=ifelse(is.na(Sepal.Length), sepal_length_avg,Sepal.Length)) #replacing the NAs in the column Sepal.Length with the average of values in that column 
+```
+
