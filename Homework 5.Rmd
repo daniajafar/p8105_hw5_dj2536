@@ -102,13 +102,17 @@ sim_results %>%
 proportion_reject = 
   sim_results %>% 
   group_by(beta1) %>%
-  summarize((reject = length(p_value <0.05)) #at which p-value we want the function to reject
+  summarize((reject = length(p_value <0.05)), #at which p-value we want the function to reject
 total = n()) %>% 
   mutate(proportion = reject/ total)
 
-
 #I am going to now add a regression line 
 ggplot(reject_proportion, aes(x = beta1, y = proportion)) + geom_point() + geom_smooth() + labs (y = "The Proportion the Null was Rejected", x = Number, title = "Power vs. Effect Size")
+
+# Now I will take the estimate of beta_hat
+average = sim_results %>% group_by(beta1) %>% summarise(avg = mean(beta1_hat))
+
+average_reject_null = sim_results %>%  group_by(beta1 %>% summarise(avg = mean(beta1_hat[p_value <0.05])))
 
 
 ```
